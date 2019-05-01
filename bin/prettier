@@ -1,0 +1,11 @@
+#!/bin/bash
+
+list_prettier_supported_files() {
+  git ls-files '.prettierrc' '*.json' '*.md' '*.ts'
+}
+
+rewrite_with_prettier() {
+  xargs node_modules/.bin/prettier --write --config .prettierrc
+}
+
+list_prettier_supported_files | rewrite_with_prettier
