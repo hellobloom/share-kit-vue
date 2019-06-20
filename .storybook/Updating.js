@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
-import {RequestElement, Action} from '../index'
+import {RequestElement, Action} from '../src/index'
 
 @Component({
   props: {
     qrOptions: Object,
     shouldRenderButton: Object,
-    buttonCallbackUrl: String
-  }
+    buttonOptions: Object,
+  },
 })
 class Updating extends Vue {
   counter = 0
@@ -27,15 +27,15 @@ class Updating extends Vue {
   }
 
   handleUpdate() {
-    this.counter = this.counter + 1;
+    this.counter = this.counter + 1
   }
 
-  render(h){
-    const {getData, handleUpdate, qrOptions, buttonCallbackUrl, shouldRenderButton} = this
+  render(h) {
+    const {getData, handleUpdate, qrOptions, buttonOptions, shouldRenderButton} = this
     return (
       <fragment>
-        <RequestElement 
-          buttonCallbackUrl={buttonCallbackUrl}
+        <RequestElement
+          buttonOptions={buttonOptions}
           shouldRenderButton={shouldRenderButton}
           qrOptions={qrOptions}
           requestData={getData()}

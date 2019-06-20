@@ -1,52 +1,57 @@
-import { VNode, CreateElement } from 'vue'
-import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
+import {VNode, CreateElement} from 'vue'
+import {Component, Watch, Prop, Vue} from 'vue-property-decorator'
 import {
   renderRequestElement,
   RequestData,
   QROptions,
+  ButtonOptions,
   ShouldRenderButton,
   RequestElementResult,
 } from '@bloomprotocol/share-kit'
 
 @Component
 class RequestElement extends Vue {
-  private requestElementResult: RequestElementResult
+  private requestElementResult: RequestElementResult | null = null
   $refs!: {
     containerRef: HTMLElement
   }
-  
+
   @Prop() requestData!: RequestData
   @Prop() qrOptions?: Partial<QROptions>
   @Prop() shouldRenderButton?: ShouldRenderButton
-  @Prop() buttonCallbackUrl: string
+  @Prop() buttonOptions!: ButtonOptions
 
   mounted() {
     if (!this.$refs.containerRef) return
 
-    const {requestData, shouldRenderButton, qrOptions, buttonCallbackUrl} = this
+    const {requestData, shouldRenderButton, qrOptions, buttonOptions} = this
     this.requestElementResult = renderRequestElement({
       container: this.$refs.containerRef,
       requestData,
       qrOptions,
       shouldRenderButton,
-      buttonCallbackUrl,
+      buttonOptions,
     })
   }
 
   @Watch('requestData')
   @Watch('qrOptions')
-  @Watch('buttonCallbackUrl')
+  @Watch('buttonOptions')
   onPropertyChanged() {
-    const {requestData, qrOptions, buttonCallbackUrl} = this
-    this.requestElementResult.update({requestData, qrOptions, buttonCallbackUrl})
+    if (!this.requestElementResult) return
+
+    const {requestData, qrOptions, buttonOptions} = this
+    this.requestElementResult.update({requestData, qrOptions, buttonOptions})
   }
 
   beforeDestroy() {
-    this.requestElementResult.remove()
+    if (this.requestElementResult) {
+      this.requestElementResult.remove()
+    }
   }
 
   render(h: CreateElement): VNode {
-    const {requestData, shouldRenderButton, qrOptions, buttonCallbackUrl, ...rest} = this
+    const {requestData, shouldRenderButton, qrOptions, buttonOptions, ...rest} = this
     return <div {...rest} ref="containerRef" />
   }
 }

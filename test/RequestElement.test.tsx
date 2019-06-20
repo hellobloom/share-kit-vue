@@ -1,8 +1,7 @@
-import { mount } from '@vue/test-utils';
-import * as shareKit from '@bloomprotocol/share-kit'
+import {mount} from '@vue/test-utils'
 
-import {RequestElement} from './RequestElement'
-import {Action, QROptions, RequestData} from '../'
+import {RequestElement} from '../src/RequestElement'
+import {Action, QROptions, RequestData} from '../src/'
 
 const requestData: RequestData = {
   action: Action.attestation,
@@ -31,47 +30,54 @@ const buttonCallbackUrl2 = 'https://mysite.com/bloom-callback-2'
 const qrOptions: Partial<QROptions> = {size: 300}
 
 describe('RequestElement', () => {
-  test('calls renderRequestElement with correct params', () => {
-    const shareKitSpy = jest.spyOn(shareKit, 'renderRequestElement')
-    const called: string[] = []
-
-    const testRequestElement:any = mount(RequestElement, {
+  test('renders correctly', () => {
+    const result: any = mount(RequestElement, {
       propsData: {
         requestData,
-        buttonCallbackUrl,
+        buttonOptions: {callbackUrl: buttonCallbackUrl},
         qrOptions,
-        shouldRenderButton: () => {
-          called.push('shouldRenderButton')
-          return true
-        }
-      }
+        shouldRenderButton: () => true,
+      },
     })
 
-    expect(shareKitSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        container: expect.any(HTMLElement),
-        requestData: expect.objectContaining(requestData),
-        qrOptions: expect.objectContaining(qrOptions),
-        shouldRenderButton: expect.any(Function),
-      })
-    )
-    expect(called).toHaveLength(1)
-    expect(called).toContain('shouldRenderButton')
-    testRequestElement.destroy();
+    const search = result
+      .find('a')
+      .attributes('href')
+      .replace('https://bloom.co/download', '')
+    const urlParams = new URLSearchParams(search)
+
+    const requestParam = urlParams.get('request')
+    const callbackUrlParam = urlParams.get('callback-url')
+
+    if (typeof requestParam !== 'string' || typeof callbackUrlParam !== 'string') {
+      if (typeof requestParam !== 'string') {
+        fail(`requestParam is not set: ${urlParams}`)
+      }
+
+      if (typeof callbackUrlParam !== 'string') {
+        fail('callbackUrlParam is not set')
+      }
+    } else {
+      expect(JSON.parse(window.atob(requestParam))).toMatchSnapshot()
+      expect(callbackUrlParam).toMatchSnapshot()
+    }
   })
 
   describe('updates when', () => {
     test('requestData changes', () => {
-      const result:any = mount(RequestElement, {
+      const result: any = mount(RequestElement, {
         propsData: {
           requestData,
-          buttonCallbackUrl,
+          buttonOptions: {callbackUrl: buttonCallbackUrl},
           qrOptions,
-          shouldRenderButton: () => true
-        }
+          shouldRenderButton: () => true,
+        },
       })
 
-      const search = result.find('a').attributes('href').replace('https://bloom.co/download', '')
+      const search = result
+        .find('a')
+        .attributes('href')
+        .replace('https://bloom.co/download', '')
       const urlParams = new URLSearchParams(search)
 
       const requestParam = urlParams.get('request')
@@ -90,7 +96,7 @@ describe('RequestElement', () => {
         expect(callbackUrlParam).toMatchSnapshot()
 
         result.setProps({
-          requestData: requestData2
+          requestData: requestData2,
         })
 
         const search2 = String(result.find('a').attributes('href')).replace('https://bloom.co/download', '')
@@ -116,14 +122,14 @@ describe('RequestElement', () => {
       result.destroy()
     })
 
-    test('buttonCallbackUrl changes', () => {
+    test('buttonOptions changes', () => {
       const result = mount(RequestElement, {
         propsData: {
           requestData,
-          buttonCallbackUrl,
+          buttonOptions: {callbackUrl: buttonCallbackUrl},
           qrOptions,
-          shouldRenderButton: () => true
-        }
+          shouldRenderButton: () => true,
+        },
       })
 
       const search = String(result.find('a').attributes('href')).replace('https://bloom.co/download', '')
@@ -145,7 +151,7 @@ describe('RequestElement', () => {
         expect(callbackUrlParam).toMatchSnapshot()
 
         result.setProps({
-          buttonCallbackUrl: buttonCallbackUrl2
+          buttonOptions: {callbackUrl: buttonCallbackUrl2},
         })
 
         const search2 = String(result.find('a').attributes('href')).replace('https://bloom.co/download', '')
