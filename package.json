@@ -1,0 +1,49 @@
+{
+  "name": "@bloomprotocol/share-kit-react",
+  "version": "1.0.1",
+  "description": "React wrapper for @bloomprotocol/share-kit",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/hellobloom/share-kit-react",
+  "author": "Bloom Team <team@bloom.co>",
+  "license": "Apache-2.0",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "npm run clean && ./bin/build",
+    "clean": "rimraf dist",
+    "prepare": "npm run build",
+    "test": "node_modules/.bin/jest --watch",
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "dependencies": {
+    "@bloomprotocol/share-kit": "^5.0.0",
+    "@vue/babel-preset-app": "^3.7.0",
+    "babel-core": "^6.26.3",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.1",
+    "vue-fragment": "^1.5.1",
+    "vue-property-decorator": "^8.1.0"
+  },
+  "devDependencies": {
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@storybook/vue": "^5.0.11",
+    "@types/jest": "^24.0.12",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.7.1",
+    "jest-canvas-mock": "^2.0.0-alpha.1",
+    "lint-staged": "^8.1.5",
+    "prettier": "^1.17.0",
+    "react-testing-library": "^5.4.4",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.4.4",
+    "tslint": "^5.16.0",
+    "typescript": "^3.3.3333",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.30.0"
+  }
+}
