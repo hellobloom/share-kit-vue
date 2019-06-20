@@ -18,7 +18,9 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run test && npm run eslint",
     "test": "tsdx test --env=jsdom",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "eslint": "./bin/eslint",
+    "eslint-fix": "./bin/eslint --fix"
   },
   "dependencies": {
     "@bloomprotocol/share-kit": "^7.0.0"
@@ -31,10 +33,16 @@
     "@babel/core": "^7.0.0",
     "@storybook/vue": "^5.1.9",
     "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
     "@vue/babel-preset-app": "^3.7.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "acorn": "^6.1.1",
     "babel-loader": "^8.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
     "jest-canvas-mock": "^2.0.0-alpha.1",
     "jest-resolve": "^24.8.0",
     "prettier": "^1.18.0",
