@@ -2,7 +2,7 @@ import {storiesOf} from '@storybook/vue'
 
 import {Logo} from './Logo'
 import {Updating} from './Updating'
-import {Action, RequestElement} from '../index'
+import {Action, RequestElement} from '../src/index'
 
 const defaultData = {
   action: Action.attestation,
@@ -19,36 +19,30 @@ const buttonCallbackUrl = 'https://mysite.com/bloom-callback'
 
 storiesOf('RequestElement', module)
   .add('Base', () => ({
-    render: (h) => <RequestElement requestData={defaultData} buttonCallbackUrl={buttonCallbackUrl} />
+    render: h => <RequestElement requestData={defaultData} buttonOptions={{callbackUrl: buttonCallbackUrl}} />,
   }))
   .add('Colors', () => ({
-    render: (h) => (
+    render: h => (
       <RequestElement
         requestData={defaultData}
-        buttonCallbackUrl={buttonCallbackUrl}
+        buttonOptions={{callbackUrl: buttonCallbackUrl}}
         qrOptions={{bgColor: '#EBF0F1', fgColor: '#3C3C3D'}}
       />
-    )
+    ),
   }))
   .add('Logo', () => ({
-    render: (h) => <Logo requestData={defaultData} buttonCallbackUrl={buttonCallbackUrl} />
+    render: h => <Logo requestData={defaultData} buttonOptions={{callbackUrl: buttonCallbackUrl}} />,
   }))
   .add('Size', () => ({
-    render: (h) => (
-      <RequestElement
-        requestData={defaultData}
-        buttonCallbackUrl={buttonCallbackUrl}
-        qrOptions={{size: 300}}
-      />
-    )
+    render: h => <RequestElement requestData={defaultData} buttonOptions={{callbackUrl: buttonCallbackUrl}} qrOptions={{size: 300}} />,
   }))
   .add('Updating', () => ({
-    render: (h) => <Updating buttonCallbackUrl={buttonCallbackUrl} />
+    render: h => <Updating buttonOptions={{callbackUrl: buttonCallbackUrl}} />,
   }))
   .add('Button', () => ({
-    render: (h) => (
+    render: h => (
       <div style={{width: '335px'}}>
-        <RequestElement requestData={defaultData} buttonCallbackUrl={buttonCallbackUrl} shouldRenderButton={() => true} />
+        <RequestElement requestData={defaultData} buttonOptions={{callbackUrl: buttonCallbackUrl}} shouldRenderButton={() => true} />
       </div>
-    )
+    ),
   }))

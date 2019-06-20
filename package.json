@@ -1,49 +1,67 @@
 {
-  "name": "@bloomprotocol/share-kit-react",
-  "version": "1.0.1",
-  "description": "React wrapper for @bloomprotocol/share-kit",
+  "name": "@bloomprotocol/share-kit-vue",
+  "version": "1.0.0",
+  "description": "Vue wrapper for @bloomprotocol/share-kit",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository": "https://github.com/hellobloom/share-kit-react",
+  "module": "dist/share-kit-vue.esm.js",
+  "typings": "dist/index.d.ts",
+  "repository": "https://github.com/hellobloom/share-kit-vue",
   "author": "Bloom Team <team@bloom.co>",
   "license": "Apache-2.0",
   "files": [
-    "dist/**"
+    "dist"
   ],
   "scripts": {
-    "build": "npm run clean && ./bin/build",
+    "start": "npm run clean && tsdx watch --tsconfig ./tsconfig.build.json",
+    "build": "npm run clean && tsdx build --tsconfig ./tsconfig.build.json",
     "clean": "rimraf dist",
     "prepare": "npm run build",
-    "test": "node_modules/.bin/jest --watch",
+    "prepublishOnly": "npm run test && npm run eslint",
+    "test": "tsdx test --env=jsdom",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
-    "@bloomprotocol/share-kit": "^5.0.0",
-    "@vue/babel-preset-app": "^3.7.0",
-    "babel-core": "^6.26.3",
+    "@bloomprotocol/share-kit": "^7.0.0"
+  },
+  "peerDependencies": {
     "vue": "^2.6.10",
-    "vue-class-component": "^7.0.1",
-    "vue-fragment": "^1.5.1",
     "vue-property-decorator": "^8.1.0"
   },
   "devDependencies": {
-    "@babel/preset-es2015": "^7.0.0-beta.53",
-    "@storybook/vue": "^5.0.11",
-    "@types/jest": "^24.0.12",
+    "@babel/core": "^7.0.0",
+    "@storybook/vue": "^5.1.9",
+    "@types/jest": "^24.0.15",
+    "@vue/babel-preset-app": "^3.7.0",
     "@vue/test-utils": "^1.0.0-beta.29",
+    "acorn": "^6.1.1",
     "babel-loader": "^8.0.5",
-    "jest": "^24.7.1",
     "jest-canvas-mock": "^2.0.0-alpha.1",
-    "lint-staged": "^8.1.5",
-    "prettier": "^1.17.0",
-    "react-testing-library": "^5.4.4",
+    "jest-resolve": "^24.8.0",
+    "prettier": "^1.18.0",
     "rimraf": "^2.6.2",
-    "ts-jest": "^24.0.2",
     "ts-loader": "^5.4.4",
-    "tslint": "^5.16.0",
-    "typescript": "^3.3.3333",
+    "tsdx": "^0.7.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.2",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.1",
+    "vue-fragment": "^1.5.1",
     "vue-loader": "^15.7.0",
+    "vue-property-decorator": "^8.1.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.30.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
