@@ -15,6 +15,9 @@ Vue wrapper for [Share Kit](https://github.com/hellobloom/share-kit#readme)
 npm install --save @bloomprotocol/share-kit-vue
 ```
 
+### Known Installation Issues
+In the past we've received reports of users encountering problems with installation. The most likely cause is our [node-gyp](https://github.com/nodejs/node-gyp) dependecy. Please make sure you follow the [installation docs for your platform here](https://github.com/nodejs/node-gyp#installation) and if that doesn't work reach out.
+
 ## Usage
 
 `RequestElement` will render a QR code or button based on the client's platform. By defualt it will render a button when the client is mobile or tablet and on iOS.
@@ -62,6 +65,7 @@ const qrOptions: Partial<QROptions> = {
   className="request-element-container"
 />
 ```
+
 
 ## More
 
